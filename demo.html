@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div id="app">
+    <input type="text" v-model="name">
+    <input type="button" value="提交" @click="add">
+    <ul>
+      <li v-for="(item,key) in list" :key="item.id">{{item.name}}</li>
+
+    </ul>
+    <h3>有好{{num}}条</h3>
+  </div>
+  <script src="../lib/vue-2.4.0.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        name: '',
+        list: [
+          { id: 1, name: '拉丽丽', done: true },
+          { id: 2, name: '李晓彤', done: false },
+          { id: 5, name: '李佳乐', done: false }
+
+
+        ]
+
+      },
+      methods: {
+        add() {
+          this.list.push({ id: this.list[this.list.length - 1] + 1, name: this.name, done: false })
+          this.name=''
+        },
+        del(id){
+          //删除的情况下就是这样
+          let index=this.list.findIndex(item=>item.id==id)
+            this.list.splice(index,1)
+        }
+      },
+      computed: {
+        //计算属性，原本是方法，但是内部对其进行封装，
+        //当成属性 进行调用，而且 不要和data的属性名相重合
+        num() {
+          return this.list.length
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
